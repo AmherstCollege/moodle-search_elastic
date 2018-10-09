@@ -319,11 +319,11 @@ class query  {
         array_push($query['query']['bool']['must'], $q);
 
         // Add contexts.
-        if (gettype($usercontexts) == 'array') {
-            $contexts = $this->construct_contexts($usercontexts);
+        if (gettype($usercontexts) == 'object' && $usercontexts->everything === FALSE) {
+            $contexts = $this->construct_contexts($usercontexts->usercontexts);
             array_push ($query['query']['bool']['filter']['bool']['must'], $contexts);
         }
-
+        
         // Add filters.
         if (isset($filters->title) && $filters->title != null) {
             $title = $this->construct_title($filters->title);
